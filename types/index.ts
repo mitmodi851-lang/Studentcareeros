@@ -84,6 +84,7 @@ export interface AnswerEntry {
 export interface AptitudeSubmission {
   id: string;
   userId: string;
+  userEmail?: string;
   submittedAt: string;   // ISO string
   scores: Record<string, number>;
   topCategoryIds: string[];
@@ -165,5 +166,86 @@ export interface TrendAnalysisResult {
   newOption: TrendingCourse;
   insightsSummary: string;
 }
+
+// ─── Teammate Finder ──────────────────────────────────────────────
+export type ExperienceLevel = 'Beginner' | 'Intermediate' | 'Advanced';
+export type CollaborationMode = 'Remote' | 'In-Person' | 'Hybrid';
+export type TeammateRequestStatus = 'Open' | 'Closed';
+
+export interface TeammateRequest {
+  id: string;
+  userId: string;
+  userName: string;
+  projectName: string;
+  preferredRole: string;
+  skills: string[];
+  description: string;
+  experienceLevel: ExperienceLevel;
+  availability: string;
+  collaborationMode: CollaborationMode;
+  status: TeammateRequestStatus;
+  createdAt: string;       // ISO string
+  updatedAt?: string;      // ISO string
+  interestedUserIds?: string[];
+  interestedCount?: number;
+  teamSize?: number;
+  maxTeamSize?: number;
+}
+
+// ─── Course Prerequisites ──────────────────────────────────────────
+export interface CoursePrerequisite {
+  id: string;
+  title: string;
+  description?: string;
+  category?: string;
+}
+
+export interface UserPrerequisiteProgress {
+  id?: string;
+  userId: string;
+  courseId: string;
+  completedPrerequisiteIds: string[];
+  updatedAt: string;
+}
+
+// ─── Career Path Simulator ─────────────────────────────────────────
+export interface RoadmapPhase {
+  title: string;
+  duration: string;
+  description: string;
+  milestones: string[];
+}
+
+export interface CareerProjectIdea {
+  title: string;
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
+  description: string;
+  tools: string[];
+  portfolioOutcome: string;
+}
+
+export interface CareerPathDetails {
+  id: CategoryId;
+  name: string;
+  tagline: string;
+  description: string;
+  icon: string;
+  color: string;
+  badgeColor: string;
+  salaryRange: string;
+  jobGrowth: string;
+  roles: string[];
+  dayInTheLife: string;
+  coreSkills: {
+    name: string;
+    description: string;
+    importance: 'Must Have' | 'Recommended' | 'Emerging';
+  }[];
+  roadmap: RoadmapPhase[];
+  projects: CareerProjectIdea[];
+  recommendedCertIds: string[];
+  trendingSearchQuery: string;
+}
+
 
 

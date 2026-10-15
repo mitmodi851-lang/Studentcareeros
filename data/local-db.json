@@ -1,0 +1,207 @@
+{
+  "users": [
+    [
+      "usr_6d69746d6f646938353140676d61696c2e636f6d",
+      {
+        "id": "usr_6d69746d6f646938353140676d61696c2e636f6d",
+        "name": "Mitmodi851",
+        "email": "mitmodi851@gmail.com",
+        "password_hash": "$2a$10$Sb.e7xVDZgHk7SEOArVJuO9/cIPoYl652KQtSuAQGFQ1bE91Jo.5W",
+        "created_at": "2026-09-30T14:10:05.475Z"
+      }
+    ],
+    [
+      "usr_6162317364627340676d61696c2e636f6d",
+      {
+        "id": "usr_6162317364627340676d61696c2e636f6d",
+        "name": "mit",
+        "email": "ab1sdbs@gmail.com",
+        "password_hash": "$2a$12$TXtS/uhMewurDQBLg4a31.JktKXOhHSIs9hqy2uuBMyh31F6gaMjm",
+        "created_at": "2026-10-15T18:44:32.570Z"
+      }
+    ]
+  ],
+  "submissions": [],
+  "courseProgress": [],
+  "resetTokens": [],
+  "teammateRequests": [
+    [
+      "tm_seed_1",
+      {
+        "id": "tm_seed_1",
+        "userId": "usr_arav_sharma",
+        "userName": "Aarav Sharma",
+        "projectName": "Smart India Hackathon 2026",
+        "preferredRole": "Frontend Developer",
+        "skills": [
+          "React",
+          "TypeScript",
+          "Tailwind CSS",
+          "Next.js"
+        ],
+        "description": "Developing a rural telemedicine and triage queue management web app. Looking for a frontend specialist to craft responsive doctor-patient consultation interfaces.",
+        "experienceLevel": "Intermediate",
+        "availability": "10-15 hrs/week",
+        "collaborationMode": "Hybrid",
+        "status": "Open",
+        "createdAt": "2026-10-13T17:34:43.732Z",
+        "interestedUserIds": [
+          "usr_6d69746d6f646938353140676d61696c2e636f6d"
+        ],
+        "interestedCount": 1
+      }
+    ],
+    [
+      "tm_seed_2",
+      {
+        "id": "tm_seed_2",
+        "userId": "usr_priya_patel",
+        "userName": "Priya Patel",
+        "projectName": "HackMIT 2026",
+        "preferredRole": "AI/ML Developer",
+        "skills": [
+          "Python",
+          "AI/ML",
+          "LLM APIs",
+          "PyTorch",
+          "FastAPI"
+        ],
+        "description": "Building an automated scientific paper critique and diagram analysis tool. Seeking an ML teammate passionate about prompt chains and multimodal embeddings.",
+        "experienceLevel": "Advanced",
+        "availability": "Full-time sprint",
+        "collaborationMode": "Remote",
+        "status": "Open",
+        "createdAt": "2026-10-11T17:34:43.733Z",
+        "interestedUserIds": [],
+        "interestedCount": 0
+      }
+    ],
+    [
+      "tm_seed_3",
+      {
+        "id": "tm_seed_3",
+        "userId": "usr_rohit_verma",
+        "userName": "Rohit Verma",
+        "projectName": "Google I/O Student Sprint",
+        "preferredRole": "Backend Developer",
+        "skills": [
+          "Node.js",
+          "Firebase",
+          "Cloud Computing",
+          "REST APIs"
+        ],
+        "description": "Building an automated cloud budget guard that sends real-time anomaly alerts when students accidentally leave cloud VM instances running.",
+        "experienceLevel": "Beginner",
+        "availability": "5-10 hrs/week",
+        "collaborationMode": "Remote",
+        "status": "Open",
+        "createdAt": "2026-10-09T17:34:43.733Z",
+        "interestedUserIds": [],
+        "interestedCount": 1
+      }
+    ],
+    [
+      "tm_seed_4",
+      {
+        "id": "tm_seed_4",
+        "userId": "usr_ananya_das",
+        "userName": "Ananya Das",
+        "projectName": "OWASP Student CTF 2026",
+        "preferredRole": "UI/UX Designer",
+        "skills": [
+          "UI/UX",
+          "Figma",
+          "Design Systems",
+          "Wireframing"
+        ],
+        "description": "We are a 3-person defensive security team needing a creative UI/UX designer to design an interactive threat analysis portal for our live judging presentation.",
+        "experienceLevel": "Intermediate",
+        "availability": "Weekends only",
+        "collaborationMode": "Hybrid",
+        "status": "Open",
+        "createdAt": "2026-10-08T17:34:43.733Z",
+        "interestedUserIds": [],
+        "interestedCount": 0
+      }
+    ],
+    [
+      "tm_seed_alex",
+      {
+        "id": "tm_seed_alex",
+        "userId": "usr_alex_rivera",
+        "userName": "Alex Rivera",
+        "projectName": "AI INNOVATION CHALLENGE 2025",
+        "preferredRole": "Frontend Developer",
+        "skills": [
+          "React",
+          "JavaScript",
+          "Firebase",
+          "Tailwind CSS"
+        ],
+        "description": "Building an AI study companion for college students. We have a solid Python backend and need a UI developer for the web interface!",
+        "experienceLevel": "Intermediate",
+        "availability": "10-15 hrs/week",
+        "collaborationMode": "Remote",
+        "status": "Open",
+        "createdAt": "2026-10-12T10:00:00.000Z",
+        "interestedUserIds": [],
+        "interestedCount": 1,
+        "teamSize": 2,
+        "maxTeamSize": 4
+      }
+    ],
+    [
+      "tm_seed_priya",
+      {
+        "id": "tm_seed_priya",
+        "userId": "usr_priya_sharma",
+        "userName": "Priya Sharma",
+        "projectName": "SMART INDIA HACKATHON",
+        "preferredRole": "Cybersecurity Analyst",
+        "skills": [
+          "Linux",
+          "Network Security",
+          "Python",
+          "Wireshark"
+        ],
+        "description": "Developing a zero-trust network monitoring tool for college labs. Looking for team members with basic ethical hacking or security knowledge.",
+        "experienceLevel": "Intermediate",
+        "availability": "Weekends only",
+        "collaborationMode": "Hybrid",
+        "status": "Open",
+        "createdAt": "2026-10-11T14:30:00.000Z",
+        "interestedUserIds": [],
+        "interestedCount": 2,
+        "teamSize": 3,
+        "maxTeamSize": 5
+      }
+    ],
+    [
+      "tm_seed_david",
+      {
+        "id": "tm_seed_david",
+        "userId": "usr_david_chen",
+        "userName": "David Chen",
+        "projectName": "CLOUD NATIVE DEVOPS SPRINT",
+        "preferredRole": "Cloud & Kubernetes Engineer",
+        "skills": [
+          "AWS",
+          "Docker",
+          "Kubernetes",
+          "Go"
+        ],
+        "description": "Automated CI/CD deployment platform for microservices.",
+        "experienceLevel": "Advanced",
+        "availability": "Full-time sprint",
+        "collaborationMode": "Remote",
+        "status": "Closed",
+        "createdAt": "2026-10-05T09:15:00.000Z",
+        "interestedUserIds": [],
+        "interestedCount": 3,
+        "teamSize": 4,
+        "maxTeamSize": 4
+      }
+    ]
+  ],
+  "prerequisites": []
+}

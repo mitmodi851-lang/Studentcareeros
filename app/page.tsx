@@ -11,24 +11,40 @@ export const metadata: Metadata = {
 
 const FEATURES = [
   {
-    icon: '🗓️',
+    icon: '🤝',
+    title: 'Teammate Finder',
+    description: 'Find compatible peers for upcoming hackathons with skill filters, role preferences, and instant interest requests.',
+    href: '/teammates',
+  },
+  {
+    icon: '🧭',
+    title: 'Career Path Simulator',
+    description: 'Explore 8 technology tracks, calculate your real-time readiness indicator, and compare roadmaps side-by-side.',
+    href: '/simulator',
+  },
+  {
+    icon: '📋',
+    title: 'Prerequisite Checklists',
+    description: 'Master course foundations before you start with course-specific checklists and saved progress per student.',
+    href: '/courses',
+  },
+  {
+    icon: '🎯',
+    title: 'Aptitude Assessment',
+    description: 'A 10-question assessment that pinpoints your strongest technology or career interest track.',
+    href: '/test',
+  },
+  {
+    icon: '📅',
     title: 'Event Discovery',
     description: 'Browse hackathons, AI summits, workshops, competitions, and webinars — all in one place.',
+    href: '/events',
   },
   {
-    icon: '🧠',
-    title: 'Aptitude Test',
-    description: 'A 10-question assessment that pinpoints your strongest technology or career interest area.',
-  },
-  {
-    icon: '🏆',
-    title: 'Smart Recommendations',
-    description: 'Get personalized certification paths ranked by difficulty — from beginner to advanced.',
-  },
-  {
-    icon: '📁',
-    title: 'Career Profile',
-    description: 'Track your aptitude results over time and see how your interests evolve.',
+    icon: '🎓',
+    title: 'Smart Course Explorer',
+    description: 'Tabular analysis engine comparing top Google courses and YouTube videos in English, Hindi, and Hinglish.',
+    href: '/courses',
   },
 ];
 
@@ -72,20 +88,27 @@ export default function LandingPage() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                href="/simulator"
+                id="hero-simulator"
+                className="btn-primary text-base px-7 py-3.5 rounded-xl shadow-md flex items-center gap-2"
+              >
+                <span>🧭 Career Simulator</span>
+              </Link>
+              <Link
+                href="/teammates"
+                id="hero-find-teammates"
+                className="btn-outline text-base px-7 py-3.5 rounded-xl flex items-center gap-2"
+              >
+                <span>🤝 Find Teammates</span>
+              </Link>
               <Link
                 href="/events"
                 id="hero-explore-events"
-                className="btn-primary text-base px-8 py-3.5 rounded-xl shadow-md"
+                className="px-6 py-3.5 text-base font-semibold text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 rounded-xl"
               >
-                🗓️ Explore Events
-              </Link>
-              <Link
-                href="/test"
-                id="hero-take-test"
-                className="btn-outline text-base px-8 py-3.5 rounded-xl"
-              >
-                🧠 Take Aptitude Test
+                Explore Events →
               </Link>
             </div>
 
@@ -116,22 +139,24 @@ export default function LandingPage() {
             <div className="text-center mb-14">
               <h2 className="section-title mb-4">Everything You Need to Launch Your Career</h2>
               <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
-                Student Career OS brings together events, assessments, and certifications so you can focus on what matters — growing.
+                Student Career OS brings together events, teammates, career roadmaps, and course foundations so you can focus on what matters — growing.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {FEATURES.map((feature) => (
-                <div
+                <Link
                   key={feature.title}
-                  className="card p-6 hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1"
+                  href={feature.href || '/'}
+                  className="card p-6 hover:shadow-card-hover transition-all duration-200 hover:-translate-y-1 block group"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-primary-50 dark:bg-primary-950/50 flex items-center justify-center text-2xl mb-4">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-base font-semibold text-navy-900 dark:text-white mb-2">{feature.title}</h3>
+                  <div className="text-2xl mb-3">{feature.icon}</div>
+                  <h3 className="text-base font-semibold text-navy-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors flex items-center justify-between">
+                    <span>{feature.title}</span>
+                    <span className="text-xs text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                  </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{feature.description}</p>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -149,14 +174,11 @@ export default function LandingPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
-                { step: '01', icon: '🔍', title: 'Explore Events', desc: 'Browse curated hackathons, workshops, and AI summits sorted by date. Filter by type, mode, or keyword.' },
-                { step: '02', icon: '📝', title: 'Take the Test', desc: 'Answer 10 quick questions about your interests and working style. No wrong answers — it\'s about you.' },
-                { step: '03', icon: '🎯', title: 'Get Your Path', desc: 'Receive a personalized set of certification recommendations matched to your top career interest areas.' },
+                { step: '01', title: 'Explore Events', desc: 'Browse curated hackathons, workshops, and AI summits sorted by date. Filter by type, mode, or keyword.' },
+                { step: '02', title: 'Take the Test', desc: 'Answer 10 quick questions about your interests and working style. No wrong answers — it\'s about you.' },
+                { step: '03', title: 'Get Your Path', desc: 'Receive a personalized set of certification recommendations matched to your top career interest areas.' },
               ].map((item) => (
                 <div key={item.step} className="text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-2xl mx-auto mb-4">
-                    {item.icon}
-                  </div>
                   <div className="text-xs font-bold text-sky-400 mb-2 tracking-widest">{item.step}</div>
                   <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
                   <p className="text-sm text-gray-400 leading-relaxed">{item.desc}</p>

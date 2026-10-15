@@ -131,14 +131,14 @@ export default function ProfilePage() {
             id="retake-test-btn"
             className="btn-primary py-2.5 px-5 text-sm w-full sm:w-auto text-center"
           >
-            🧠 Retake Aptitude Test
+            Retake Aptitude Test
           </Link>
         </div>
 
         {/* My Learning Section */}
         <div className="mb-10">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-navy-900 dark:text-white">📚 My Learning</h2>
+            <h2 className="text-xl font-bold text-navy-900 dark:text-white">My Learning</h2>
             <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-navy-900 px-3 py-1 rounded-full">
               {courseProgressList.length} Courses Tracked
             </span>
@@ -194,7 +194,6 @@ export default function ProfilePage() {
             </div>
           ) : courseProgressList.length === 0 ? (
             <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-gray-100 dark:border-gray-800 p-8 text-center shadow-sm">
-              <div className="text-4xl mb-3">🎓</div>
               <h3 className="text-lg font-semibold text-navy-900 dark:text-white mb-1">No Courses Started Yet</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-6">
                 Take the aptitude test to get personalized course recommendations, then start tracking your progress.
@@ -225,19 +224,25 @@ export default function ProfilePage() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-navy-900 dark:text-white">Aptitude Test History</h2>
             <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-navy-900 px-3 py-1 rounded-full">
-              {profile?.submissions.length || 0} Submissions
+              {(profile?.submissions || []).length} Submissions
             </span>
           </div>
 
           {error && (
             <div className="bg-white dark:bg-navy-800 rounded-card p-6 text-center border border-red-100 dark:border-red-900/50 text-red-600 dark:text-red-400 text-sm mb-6">
-              ⚠️ {error}
+              {error}
             </div>
           )}
 
-          {!error && profile?.submissions.length === 0 && (
+          {!error && !profile && (
+            <div className="bg-white dark:bg-navy-800 rounded-card border border-gray-100 dark:border-gray-800 p-6 text-center shadow-sm">
+              <div className="w-8 h-8 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+              <p className="text-sm text-gray-400 dark:text-gray-500">Loading test history...</p>
+            </div>
+          )}
+
+          {!error && profile && (profile.submissions || []).length === 0 && (
             <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-gray-100 dark:border-gray-800 p-8 text-center shadow-sm">
-              <div className="text-4xl mb-3">📝</div>
               <h3 className="text-lg font-semibold text-navy-900 dark:text-white mb-1">No Aptitude Tests Taken Yet</h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-6">
                 Take our 10-question aptitude assessment to discover your strongest tech area and get personalized certification recommendations.
@@ -248,9 +253,9 @@ export default function ProfilePage() {
             </div>
           )}
 
-          {!error && profile && profile.submissions.length > 0 && (
+          {!error && profile && (profile.submissions || []).length > 0 && (
             <div className="space-y-4">
-              {profile.submissions.map((sub) => (
+              {(profile.submissions || []).map((sub) => (
                 <SubmissionCard key={sub.id} submission={sub} />
               ))}
             </div>

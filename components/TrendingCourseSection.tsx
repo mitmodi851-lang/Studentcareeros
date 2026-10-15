@@ -5,20 +5,20 @@ import type { CourseLanguage, TrendingCourse } from '@/types';
 import { getCourseTrendAnalysis } from '@/lib/trendingCoursesData';
 
 const POPULAR_SEARCHES = [
-  { name: 'Generative AI', icon: '🤖' },
-  { name: 'Cybersecurity', icon: '🛡️' },
-  { name: 'Full Stack Web Dev', icon: '💻' },
-  { name: 'Data Science', icon: '📊' },
-  { name: 'Cloud Computing', icon: '☁️' },
-  { name: 'Ethical Hacking', icon: '🔓' },
-  { name: 'UI/UX Design', icon: '🎨' },
+  { name: 'Generative AI', icon: '' },
+  { name: 'Cybersecurity', icon: '' },
+  { name: 'Full Stack Web Dev', icon: '' },
+  { name: 'Data Science', icon: '' },
+  { name: 'Cloud Computing', icon: '' },
+  { name: 'Ethical Hacking', icon: '' },
+  { name: 'UI/UX Design', icon: '' },
 ];
 
 const LANGUAGES: { label: string; value: CourseLanguage; flag: string }[] = [
-  { label: 'All Languages', value: 'All', flag: '🌍' },
-  { label: 'English', value: 'English', flag: '🇬🇧' },
-  { label: 'Hindi (हिंदी)', value: 'Hindi', flag: '🇮🇳' },
-  { label: 'Hinglish', value: 'Hinglish', flag: '🇮🇳' },
+  { label: 'All Languages', value: 'All', flag: '' },
+  { label: 'English', value: 'English', flag: '' },
+  { label: 'Hindi (हिंदी)', value: 'Hindi', flag: '' },
+  { label: 'Hinglish', value: 'Hinglish', flag: '' },
 ];
 
 function CourseTierCard({ course }: { course: TrendingCourse }) {
@@ -30,7 +30,7 @@ function CourseTierCard({ course }: { course: TrendingCourse }) {
     Best: {
       title: 'BEST OPTION',
       subtitle: 'Top-Rated Industry Standard',
-      icon: '👑',
+      icon: '',
       border: 'border-emerald-500/30 dark:border-emerald-500/40',
       bgHeader: 'bg-emerald-50 dark:bg-emerald-950/40',
       badge: 'bg-emerald-600 text-white',
@@ -40,7 +40,7 @@ function CourseTierCard({ course }: { course: TrendingCourse }) {
     Medium: {
       title: 'MEDIUM OPTION',
       subtitle: 'Balanced & Practical Choice',
-      icon: '⚖️',
+      icon: '',
       border: 'border-blue-500/30 dark:border-blue-500/40',
       bgHeader: 'bg-blue-50 dark:bg-blue-950/40',
       badge: 'bg-blue-600 text-white',
@@ -50,7 +50,7 @@ function CourseTierCard({ course }: { course: TrendingCourse }) {
     New: {
       title: 'NEW OPTION',
       subtitle: '2026 Emerging Hot Trend',
-      icon: '🚀',
+      icon: '',
       border: 'border-purple-500/30 dark:border-purple-500/40',
       bgHeader: 'bg-purple-50 dark:bg-purple-950/40',
       badge: 'bg-purple-600 text-white',
@@ -184,7 +184,7 @@ export default function TrendingCourseSection() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-gray-100 dark:border-gray-800">
         <div>
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/10 to-primary-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-bold px-3 py-1 rounded-full mb-2">
-            <span>🔥 NEW FEATURE</span>
+            <span>NEW FEATURE</span>
             <span>·</span>
             <span>Course Trend Analyzer</span>
           </div>
@@ -207,9 +207,8 @@ export default function TrendingCourseSection() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Search course (e.g. Cybersecurity, Generative AI, Web Dev...)"
-              className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-navy-800 text-navy-900 dark:text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors shadow-inner"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-navy-800 text-navy-900 dark:text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors shadow-inner"
             />
-            <span className="absolute left-3.5 top-3.5 text-gray-400 text-base">🔍</span>
           </div>
 
           <button
@@ -234,7 +233,7 @@ export default function TrendingCourseSection() {
                   : 'bg-gray-50 dark:bg-navy-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-navy-700'
               }`}
             >
-              <span className="mr-1">{item.icon}</span> {item.name}
+              {item.name}
             </button>
           ))}
         </div>
@@ -256,7 +255,7 @@ export default function TrendingCourseSection() {
                     : 'bg-white dark:bg-navy-800 text-gray-600 dark:text-gray-400 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-navy-700'
                 }`}
               >
-                <span className="mr-1">{lang.flag}</span> {lang.label}
+                {lang.label}
               </button>
             ))}
           </div>
@@ -265,7 +264,6 @@ export default function TrendingCourseSection() {
 
       {/* Insights Summary Banner */}
       <div className="p-4 rounded-xl bg-gradient-to-r from-primary-50 to-sky-50 dark:from-navy-800 dark:to-navy-800/60 border border-primary-100 dark:border-primary-900/50 mb-8 flex items-center gap-3">
-        <div className="text-2xl">⚡</div>
         <div className="text-xs sm:text-sm">
           <span className="font-bold text-navy-900 dark:text-white">Trend Analysis for &ldquo;{query}&rdquo;:</span>{' '}
           <span className="text-gray-600 dark:text-gray-300">{analysis.insightsSummary}</span>

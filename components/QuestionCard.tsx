@@ -26,7 +26,7 @@ export default function QuestionCard({ question, selectedOptionId, onSelect }: Q
                 w-full text-left px-4 py-4 rounded-card border-2 transition-all duration-150
                 flex items-start gap-4 group
                 ${isSelected
-                  ? 'border-primary-600 dark:border-primary-500 bg-primary-50 dark:bg-primary-950/60 shadow-sm'
+                  ? 'border-primary-600 dark:border-primary-500 bg-primary-50/90 dark:bg-primary-900/40 shadow-sm'
                   : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-navy-800 hover:border-primary-300 dark:hover:border-primary-500/60 hover:bg-primary-50/40 dark:hover:bg-navy-700'
                 }
               `}
@@ -46,7 +46,11 @@ export default function QuestionCard({ question, selectedOptionId, onSelect }: Q
               </span>
 
               <span
-                className={`text-sm font-medium leading-relaxed ${isSelected ? 'text-primary-800 dark:text-primary-200' : 'text-gray-700 dark:text-gray-200'}`}
+                className={`text-sm font-medium leading-relaxed ${
+                  isSelected
+                    ? 'text-primary-900 dark:text-white font-semibold'
+                    : 'text-gray-700 dark:text-gray-200'
+                }`}
               >
                 {option.text}
               </span>

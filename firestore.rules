@@ -1,9 +1,27 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Deny ALL direct client access — all reads/writes go through Admin SDK
+    // Primary Architecture:
+    // All client reads/writes route through Next.js server route handlers using Firebase Admin SDK.
+    // Direct client access is denied by default to prevent exposure of sensitive user data.
     match /{document=**} {
       allow read, write: if false;
+    }
+
+    // Rules specification for Teammate Requests (if direct client access enabled):
+    // - Authenticated users can read open requests.
+    // - Authenticated users can create requests matching their own userId.
+    // - Only request owners can update or delete their requests.
+    match /teammateRequests/{requestId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+
+    // Rules specification for Course Prerequisites:
+    // - Only the owner can read or write their prerequisite progress.
+    match /coursePrerequisites/{progressId} {
+      allow read, write: if request.auth != null && (resource == null || resource.data.userId == request.auth.uid);
     }
   }
 }

@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import type { CourseLanguage, TrendingCourse } from '@/types';
 import { getTabularCourses } from '@/lib/trendingCoursesData';
+import PrerequisiteChecklist from '@/components/PrerequisiteChecklist';
 
 const POPULAR_SUBJECTS = [
   { name: 'Cybersecurity', icon: '🛡️' },
@@ -384,6 +385,15 @@ export default function CoursesPage() {
                       </li>
                     ))}
                   </ul>
+                </div>
+
+                {/* Course Prerequisite Checklist */}
+                <div className="pt-2">
+                  <PrerequisiteChecklist
+                    courseId={selectedCourseDetails.id}
+                    courseTitle={selectedCourseDetails.title}
+                    courseUrl={selectedCourseDetails.url}
+                  />
                 </div>
 
                 <div className="p-3 rounded-lg bg-primary-50 dark:bg-navy-800 border border-primary-100 dark:border-primary-900">

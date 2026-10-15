@@ -3,13 +3,20 @@ import type { AptitudeSubmission } from '@/types';
 import { getCategoryById } from '@/lib/categories';
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-IN', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  if (!iso) return 'Recent Assessment';
+  try {
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return 'Recent Assessment';
+    return d.toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch {
+    return 'Recent Assessment';
+  }
 }
 
 interface SubmissionCardProps {
@@ -17,7 +24,21 @@ interface SubmissionCardProps {
 }
 
 export default function SubmissionCard({ submission }: SubmissionCardProps) {
-  const topCategories = submission.topCategoryIds.map((id) => getCategoryById(id)).filter(Boolean);
+  const topIds = submission?.topCategoryIds || (submission as any)?.topCategories || [];
+  const validTopIds = Array.isArray(topIds) && topIds.length > 0 ? topIds : ['web-software-dev'];
+  const topCategories = validTopIds
+    .map((id) => getCategoryById(id))
+    .filter((cat): cat is NonNullable<typeof cat> => Boolean(cat && cat.id));
+
+  const categoriesToDisplay = topCategories.length > 0 ? topCategories : [
+    {
+      id: 'web-software-dev',
+      name: 'Web & Software Development',
+      description: '',
+      icon: '💻',
+      color: 'bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300',
+    }
+  ];
 
   return (
     <div className="bg-white dark:bg-navy-800 rounded-card border border-gray-100 dark:border-gray-800 shadow-card hover:shadow-card-hover transition-all duration-200 p-5">
@@ -27,17 +48,17 @@ export default function SubmissionCard({ submission }: SubmissionCardProps) {
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            {formatDate(submission.submittedAt)}
+            {formatDate(submission?.submittedAt)}
           </p>
 
           <div className="flex flex-wrap gap-2">
-            {topCategories.map((cat) => (
+            {categoriesToDisplay.map((cat) => (
               <span
-                key={cat!.id}
-                className={`text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 ${cat!.color}`}
+                key={cat.id}
+                className={`text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 ${cat.color}`}
               >
-                <span>{cat!.icon}</span>
-                {cat!.name}
+                <span>{cat.icon}</span>
+                {cat.name}
               </span>
             ))}
           </div>

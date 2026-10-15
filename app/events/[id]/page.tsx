@@ -83,7 +83,6 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
 
         {error && (
           <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-red-100 dark:border-red-900/50 p-8 text-center">
-            <div className="text-4xl mb-3">⚠️</div>
             <h2 className="text-xl font-semibold text-navy-900 dark:text-white mb-2">{error}</h2>
             <Link href="/events" className="btn-primary mt-4">
               Explore All Events
@@ -111,8 +110,8 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             {/* Organizer & Location */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-gray-50/80 dark:bg-navy-900/80 mb-6 border border-gray-100 dark:border-gray-800">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary-100 dark:bg-primary-950 text-primary-700 dark:text-primary-300 flex items-center justify-center text-lg">
-                  🏢
+                <div className="w-10 h-10 rounded-lg bg-primary-100 dark:bg-primary-950 text-primary-700 dark:text-primary-300 flex items-center justify-center text-xs font-bold">
+                  ORG
                 </div>
                 <div>
                   <div className="text-xs text-gray-400 dark:text-gray-500 font-medium">Organizer</div>
@@ -121,8 +120,8 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 flex items-center justify-center text-lg">
-                  📍
+                <div className="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 flex items-center justify-center text-xs font-bold">
+                  LOC
                 </div>
                 <div>
                   <div className="text-xs text-gray-400 dark:text-gray-500 font-medium">Location / Venue</div>
@@ -131,8 +130,8 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-lg">
-                  📅
+                <div className="w-10 h-10 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-xs font-bold">
+                  START
                 </div>
                 <div>
                   <div className="text-xs text-gray-400 dark:text-gray-500 font-medium">Start Date & Time</div>
@@ -143,8 +142,8 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center text-lg">
-                  🏁
+                <div className="w-10 h-10 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center text-xs font-bold">
+                  END
                 </div>
                 <div>
                   <div className="text-xs text-gray-400 dark:text-gray-500 font-medium">End Date & Time</div>

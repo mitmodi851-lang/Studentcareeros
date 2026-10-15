@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Authentication required.' }, { status: 401 });
     }
     const userId = session.user.id;
+    const userEmail = session.user.email ?? undefined;
 
     // ── 2. Validate request body ──────────────────────────────────────────────
     const body = await req.json();
@@ -57,9 +58,13 @@ export async function POST(req: NextRequest) {
 
     // ── 5. Determine top category/categories (within 1 point of max) ─────────
     const maxScore = Math.max(...Object.values(scores), 0);
-    const topCategoryIds = Object.entries(scores)
+    let topCategoryIds = Object.entries(scores)
       .filter(([, score]) => score >= maxScore - 1 && score > 0)
       .map(([id]) => id);
+
+    if (topCategoryIds.length === 0) {
+      topCategoryIds = ['web-software-dev'];
+    }
 
     // ── 6. Fetch matching certifications & categories ─────────────────────────
     const certifications = await getCertifications(topCategoryIds);
@@ -68,6 +73,7 @@ export async function POST(req: NextRequest) {
     // ── 7. Save submission ───────────────────────────────────────────────────
     const submissionId = await saveSubmission({
       userId,
+      userEmail,
       submittedAt: new Date().toISOString(),
       scores,
       topCategoryIds,

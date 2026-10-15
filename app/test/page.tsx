@@ -67,7 +67,6 @@ export default function TestPage() {
         <Navbar />
         <main className="flex-1 max-w-xl mx-auto w-full px-4 py-16 text-center">
           <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-gray-100 dark:border-gray-800 p-8 shadow-card">
-            <div className="text-4xl mb-3">⚠️</div>
             <h2 className="text-xl font-bold text-navy-900 dark:text-white mb-2">Could Not Load Questions</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">{error || 'No questions available.'}</p>
             <button
@@ -136,7 +135,7 @@ export default function TestPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-50 dark:bg-primary-950/60 text-primary-700 dark:text-primary-300 text-xs font-semibold rounded-full mb-3">
-            🧠 Aptitude Assessment
+            Aptitude Assessment
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-navy-900 dark:text-white">
             Career Aptitude Test
@@ -152,7 +151,7 @@ export default function TestPage() {
 
           {error && (
             <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900/50 text-sm text-red-600 dark:text-red-400">
-              ⚠️ {error}
+              {error}
             </div>
           )}
 
@@ -215,7 +214,7 @@ export default function TestPage() {
           {/* Unanswered Banner on Last Question */}
           {isLastQuestion && !isAllAnswered && (
             <p className="text-xs text-amber-600 dark:text-amber-400 text-center mt-4">
-              ⚠️ Please answer all 10 questions before viewing results ({answeredCount}/10 answered).
+              Please answer all 10 questions before viewing results ({answeredCount}/10 answered).
             </p>
           )}
         </div>

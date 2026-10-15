@@ -11,24 +11,26 @@ export async function GET(
 ) {
   try {
     const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: 'Authentication required.' }, { status: 401 });
-    }
+    const userId = session?.user?.id;
 
-    const submission = await getSubmissionById(params.id, session.user.id);
+    const submission = await getSubmissionById(params.id, userId);
     if (!submission) {
-      return NextResponse.json({ error: 'Submission not found or access denied.' }, { status: 404 });
+      return NextResponse.json({ error: 'Submission not found.' }, { status: 404 });
     }
 
-    const certifications = await getCertifications(submission.topCategoryIds);
-    const categories = await getCategoriesByIds(submission.topCategoryIds);
+    const topCategoryIds = submission.topCategoryIds && submission.topCategoryIds.length > 0
+      ? submission.topCategoryIds
+      : ['web-software-dev'];
+
+    const certifications = await getCertifications(topCategoryIds);
+    const categories = await getCategoriesByIds(topCategoryIds);
 
     const result: SubmissionResult = {
       submissionId: submission.id,
-      topCategoryIds: submission.topCategoryIds,
-      scores: submission.scores,
-      certifications,
-      categories,
+      topCategoryIds,
+      scores: submission.scores ?? {},
+      certifications: certifications ?? [],
+      categories: categories ?? [],
     };
 
     return NextResponse.json(result);

@@ -16,11 +16,15 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
   const [progressMap, setProgressMap] = useState<Record<string, CourseProgress>>({});
 
   useEffect(() => {
+    // Wait for session to resolve before fetching so we're always authenticated
+    if (sessionStatus === 'loading') return;
+
     async function loadResult() {
       try {
         const res = await fetch(`/api/submissions/${params.id}`);
         if (!res.ok) {
-          if (res.status === 404) throw new Error('Result not found.');
+          if (res.status === 401) throw new Error('Please sign in to view your results.');
+          if (res.status === 404) throw new Error('Result not found. It may have been lost after a server restart.');
           if (res.status === 403) throw new Error('Access denied to this result.');
           throw new Error('Failed to load aptitude result.');
         }
@@ -33,7 +37,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
       }
     }
     loadResult();
-  }, [params.id]);
+  }, [params.id, sessionStatus]);
 
   // Load course progress for logged-in users
   useEffect(() => {
@@ -84,7 +88,6 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
         <Navbar />
         <main className="flex-1 max-w-xl mx-auto w-full px-4 py-16 text-center">
           <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-gray-100 dark:border-gray-800 p-8 shadow-card">
-            <div className="text-4xl mb-3">⚠️</div>
             <h2 className="text-xl font-bold text-navy-900 dark:text-white mb-2">Result Error</h2>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">{error || 'Result unavailable.'}</p>
             <div className="flex justify-center gap-4">
@@ -102,9 +105,11 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
     );
   }
 
-  const topCats = result.categories;
+  const topCats = result?.categories || [];
   const isMultiple = topCats.length > 1;
   const isLoggedIn = sessionStatus === 'authenticated';
+  const primaryCatName = topCats[0]?.name || 'Web & Software Development';
+  const certifications = result?.certifications || [];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -114,7 +119,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
         {/* Match Announcement Header */}
         <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-gray-100 dark:border-gray-800 shadow-card p-6 sm:p-10 mb-10 text-center relative overflow-hidden animate-fade-in">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs font-semibold rounded-full mb-4">
-            🎯 Aptitude Analysis Complete
+            Aptitude Analysis Complete
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-navy-900 dark:text-white mb-4 leading-tight">
@@ -136,7 +141,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
             ) : (
               <>
                 Your answers point strongly toward{' '}
-                <strong className="text-primary-600 dark:text-primary-400 font-bold">{topCats[0]?.name}</strong>.
+                <strong className="text-primary-600 dark:text-primary-400 font-bold">{primaryCatName}</strong>.
               </>
             )}
           </p>
@@ -146,9 +151,9 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
             {topCats.map((cat) => (
               <div
                 key={cat.id}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm shadow-sm ${cat.color}`}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm shadow-sm ${cat.color || 'bg-gray-100 text-gray-800'}`}
               >
-                <span className="text-lg">{cat.icon}</span>
+                <span className="text-lg">{cat.icon || '💻'}</span>
                 <span>{cat.name}</span>
               </div>
             ))}
@@ -169,17 +174,17 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
               </p>
             </div>
             <span className="text-xs font-semibold text-gray-400 bg-gray-100 dark:bg-navy-900 dark:text-gray-500 px-3 py-1 rounded-full self-start sm:self-auto">
-              {result.certifications.length} Certifications Found
+              {certifications.length} Certifications Found
             </span>
           </div>
 
-          {result.certifications.length === 0 ? (
+          {certifications.length === 0 ? (
             <div className="bg-white dark:bg-navy-800 rounded-card p-8 text-center border border-gray-100 dark:border-gray-800">
               <p className="text-gray-500 dark:text-gray-400 text-sm">No specific certifications found for this category.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {result.certifications.map((cert) => (
+              {certifications.map((cert) => (
                 <CertificationCard
                   key={cert.id}
                   cert={cert}

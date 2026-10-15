@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { Certification, CourseProgress } from '@/types';
+import PrerequisiteChecklist from '@/components/PrerequisiteChecklist';
 
 const LEVEL_STYLES: Record<string, string> = {
   Beginner: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800',
@@ -32,6 +33,7 @@ export default function CertificationCard({
 }: CertificationCardProps) {
   const [showSlider, setShowSlider] = useState(false);
   const [sliderValue, setSliderValue] = useState(progress?.progress ?? 0);
+  const [showPrereqs, setShowPrereqs] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const currentProgress = progress?.progress ?? 0;
@@ -78,7 +80,7 @@ export default function CertificationCard({
 
         {cert.recommendationVerdict && (
           <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${VERDICT_STYLES[cert.recommendationVerdict] || 'bg-gray-100 text-gray-700'}`}>
-            ★ {cert.recommendationVerdict}
+            {cert.recommendationVerdict}
           </span>
         )}
       </div>
@@ -87,11 +89,10 @@ export default function CertificationCard({
       <div className="mb-2">
         <h3 className="text-base font-bold text-navy-900 dark:text-white leading-snug mb-1">{cert.name}</h3>
         <div className="flex items-center gap-1.5 text-xs font-semibold text-primary-600 dark:text-primary-400">
-          <span>🏛️</span>
           <span>{cert.officialIssuer || cert.provider}</span>
           {cert.rating && (
             <span className="ml-auto text-amber-500 font-bold flex items-center gap-1">
-              ⭐ {cert.rating}/5
+              Rating: {cert.rating}/5
             </span>
           )}
         </div>
@@ -104,13 +105,13 @@ export default function CertificationCard({
         <div className="mb-4 p-3 bg-gray-50 dark:bg-navy-900/80 rounded-xl border border-gray-100 dark:border-gray-800 text-xs space-y-2">
           {cert.whyGood && (
             <div className="flex items-start gap-1.5 text-emerald-700 dark:text-emerald-400">
-              <span className="shrink-0 font-bold">👍 Why Good:</span>
+              <span className="shrink-0 font-bold">Why Good:</span>
               <span className="leading-snug">{cert.whyGood}</span>
             </div>
           )}
           {cert.watchOut && (
             <div className="flex items-start gap-1.5 text-amber-700 dark:text-amber-400">
-              <span className="shrink-0 font-bold">💡 Note:</span>
+              <span className="shrink-0 font-bold">Note:</span>
               <span className="leading-snug">{cert.watchOut}</span>
             </div>
           )}
@@ -175,6 +176,36 @@ export default function CertificationCard({
         </div>
       )}
 
+      {/* Prerequisite Checklist Toggle & Container */}
+      <div className="mb-3">
+        <button
+          type="button"
+          onClick={() => setShowPrereqs(!showPrereqs)}
+          className="w-full text-center px-3 py-1.5 text-xs font-semibold text-primary-700 dark:text-primary-300 bg-primary-50/70 hover:bg-primary-100 dark:bg-primary-950/40 dark:hover:bg-primary-900/60 border border-primary-200/80 dark:border-primary-800/60 rounded-xl transition-all duration-200 flex items-center justify-between"
+          aria-expanded={showPrereqs}
+        >
+          <span className="flex items-center gap-1.5">
+            <span>📋</span>
+            <span>Prerequisites Checklist</span>
+          </span>
+          <span className="text-[10px] font-bold text-primary-500">
+            {showPrereqs ? '▲ Hide' : '▼ View'}
+          </span>
+        </button>
+
+        {showPrereqs && (
+          <div className="mt-3">
+            <PrerequisiteChecklist
+              courseId={cert.id}
+              courseTitle={cert.name}
+              categoryId={cert.categoryId}
+              courseUrl={cert.url}
+              onContinue={handleStartCourse}
+            />
+          </div>
+        )}
+      </div>
+
       {/* External Direct Links & CTAs */}
       <div className="mt-auto flex flex-col gap-2 pt-2">
         <a
@@ -193,7 +224,7 @@ export default function CertificationCard({
             onClick={() => { setSliderValue(currentProgress); setShowSlider(true); }}
             className="w-full text-center px-3 py-1.5 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-primary-50 dark:hover:bg-navy-900 border border-gray-200 dark:border-gray-700 rounded-xl transition-all duration-200"
           >
-            ✏️ {currentProgress === 0 ? 'Track My Progress' : 'Update Progress'}
+            {currentProgress === 0 ? 'Track My Progress' : 'Update Progress'}
           </button>
         )}
       </div>

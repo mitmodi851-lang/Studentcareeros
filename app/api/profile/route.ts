@@ -18,7 +18,7 @@ export async function GET(_req: NextRequest) {
     const name = user?.name || session.user.name || 'Student';
     const email = user?.email || session.user.email || '';
 
-    const submissions = await getUserSubmissions(userId);
+    const submissions = await getUserSubmissions(userId, email);
 
     const profile: ProfileData = {
       name,
