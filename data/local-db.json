@@ -19,9 +19,101 @@
         "password_hash": "$2a$12$TXtS/uhMewurDQBLg4a31.JktKXOhHSIs9hqy2uuBMyh31F6gaMjm",
         "created_at": "2026-10-15T18:44:32.570Z"
       }
+    ],
+    [
+      "usr_6d61756c696e31323340676d61696c2e636f6d",
+      {
+        "id": "usr_6d61756c696e31323340676d61696c2e636f6d",
+        "name": "Maulin123",
+        "email": "maulin123@gmail.com",
+        "password_hash": "$2a$10$himw702DZZCFVIXMuc38E.jD.lkMe8WBBnlmEweigfj3OZjUNqZuy",
+        "created_at": "2026-10-16T12:10:50.062Z"
+      }
     ]
   ],
-  "submissions": [],
+  "submissions": [
+    [
+      "sub_test1",
+      {
+        "id": "sub_test1",
+        "userId": "usr_fallback",
+        "submittedAt": "2026-10-16T12:06:16.792Z",
+        "scores": {
+          "web-software-dev": 5,
+          "ai-applied-ai": 4
+        },
+        "topCategoryIds": [
+          "web-software-dev",
+          "ai-applied-ai"
+        ],
+        "answers": []
+      }
+    ],
+    [
+      "sub_17921526690883bpy",
+      {
+        "id": "sub_17921526690883bpy",
+        "userId": "usr_6d61756c696e31323340676d61696c2e636f6d",
+        "userEmail": "maulin123@gmail.com",
+        "submittedAt": "2026-10-16T12:11:09.088Z",
+        "scores": {
+          "cybersecurity": 1,
+          "digital-marketing": 2,
+          "cloud-computing": 2,
+          "data-science-analytics": 1,
+          "business-project-mgmt": 3,
+          "web-software-dev": 1
+        },
+        "topCategoryIds": [
+          "digital-marketing",
+          "cloud-computing",
+          "business-project-mgmt"
+        ],
+        "answers": [
+          {
+            "questionId": "q1",
+            "optionId": "q1c"
+          },
+          {
+            "questionId": "q2",
+            "optionId": "q2c"
+          },
+          {
+            "questionId": "q3",
+            "optionId": "q3d"
+          },
+          {
+            "questionId": "q4",
+            "optionId": "q4c"
+          },
+          {
+            "questionId": "q5",
+            "optionId": "q5d"
+          },
+          {
+            "questionId": "q6",
+            "optionId": "q6d"
+          },
+          {
+            "questionId": "q7",
+            "optionId": "q7c"
+          },
+          {
+            "questionId": "q8",
+            "optionId": "q8d"
+          },
+          {
+            "questionId": "q9",
+            "optionId": "q9c"
+          },
+          {
+            "questionId": "q10",
+            "optionId": "q10d"
+          }
+        ]
+      }
+    ]
+  ],
   "courseProgress": [],
   "resetTokens": [],
   "teammateRequests": [

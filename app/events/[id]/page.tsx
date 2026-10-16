@@ -1,25 +1,59 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { getEventById, getEvents } from '@/lib/db';
 import type { CareerEvent } from '@/types';
 
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  try {
+    const events = await getEvents({});
+    return events.map((event) => ({ id: event.id }));
+  } catch {
+    return [
+      { id: 'evt-1' },
+      { id: 'evt-2' },
+      { id: 'evt-3' },
+      { id: 'evt-4' },
+      { id: 'evt-5' },
+      { id: 'evt-6' },
+      { id: 'evt-7' },
+      { id: 'evt-8' },
+      { id: 'evt-9' },
+      { id: 'evt-10' },
+      { id: 'evt-11' },
+      { id: 'evt-12' },
+      { id: 'evt-13' },
+      { id: 'evt-14' },
+      { id: 'evt-15' },
+      { id: 'evt-16' },
+    ];
+  }
+}
+
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-IN', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+  try {
+    return new Date(iso).toLocaleDateString('en-IN', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  } catch {
+    return iso;
+  }
 }
 
 function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString('en-IN', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  try {
+    return new Date(iso).toLocaleTimeString('en-IN', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch {
+    return '';
+  }
 }
 
 const TYPE_COLORS: Record<string, string> = {
@@ -36,29 +70,22 @@ const MODE_COLORS: Record<string, string> = {
   Hybrid: 'bg-purple-50 text-purple-700 dark:bg-purple-950/50 dark:text-purple-300 border border-purple-200 dark:border-purple-800',
 };
 
-export default function EventDetailPage({ params }: { params: { id: string } }) {
-  const [event, setEvent] = useState<CareerEvent | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+export default async function EventDetailPage({
+  params,
+}: {
+  params: { id: string } | Promise<{ id: string }>;
+}) {
+  const resolvedParams = await Promise.resolve(params);
+  const eventId = resolvedParams?.id;
 
-  useEffect(() => {
-    async function loadEvent() {
-      try {
-        const res = await fetch(`/api/events/${params.id}`);
-        if (!res.ok) {
-          if (res.status === 404) throw new Error('Event not found.');
-          throw new Error('Failed to load event details.');
-        }
-        const data = await res.json();
-        setEvent(data.event);
-      } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : 'An error occurred.');
-      } finally {
-        setLoading(false);
-      }
+  let event: CareerEvent | null = null;
+  try {
+    if (eventId) {
+      event = await getEventById(eventId);
     }
-    loadEvent();
-  }, [params.id]);
+  } catch (err) {
+    console.error(`[EventDetailPage] Error fetching event ${eventId}:`, err);
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -73,24 +100,17 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
           ← Back to Events
         </Link>
 
-        {loading && (
-          <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-gray-100 dark:border-gray-800 p-8 animate-pulse space-y-6">
-            <div className="h-6 bg-gray-100 dark:bg-navy-700 rounded w-1/4" />
-            <div className="h-8 bg-gray-100 dark:bg-navy-700 rounded w-3/4" />
-            <div className="h-20 bg-gray-100 dark:bg-navy-700 rounded w-full" />
-          </div>
-        )}
-
-        {error && (
+        {!event ? (
           <div className="bg-white dark:bg-navy-800 rounded-card-lg border border-red-100 dark:border-red-900/50 p-8 text-center">
-            <h2 className="text-xl font-semibold text-navy-900 dark:text-white mb-2">{error}</h2>
-            <Link href="/events" className="btn-primary mt-4">
+            <h2 className="text-xl font-semibold text-navy-900 dark:text-white mb-2">Event not found</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+              The event you are looking for may have ended or does not exist.
+            </p>
+            <Link href="/events" className="btn-primary">
               Explore All Events
             </Link>
           </div>
-        )}
-
-        {event && (
+        ) : (
           <article className="bg-white dark:bg-navy-800 rounded-card-lg border border-gray-100 dark:border-gray-800 shadow-card p-6 sm:p-8 animate-fade-in">
             {/* Header badges */}
             <div className="flex flex-wrap items-center gap-2.5 mb-4">
@@ -136,7 +156,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
                 <div>
                   <div className="text-xs text-gray-400 dark:text-gray-500 font-medium">Start Date & Time</div>
                   <div className="text-sm font-semibold text-navy-900 dark:text-white">
-                    {formatDate(event.startDate)} ({formatTime(event.startDate)})
+                    {formatDate(event.startDate)} {formatTime(event.startDate) ? `(${formatTime(event.startDate)})` : ''}
                   </div>
                 </div>
               </div>
@@ -148,7 +168,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
                 <div>
                   <div className="text-xs text-gray-400 dark:text-gray-500 font-medium">End Date & Time</div>
                   <div className="text-sm font-semibold text-navy-900 dark:text-white">
-                    {formatDate(event.endDate)} ({formatTime(event.endDate)})
+                    {formatDate(event.endDate)} {formatTime(event.endDate) ? `(${formatTime(event.endDate)})` : ''}
                   </div>
                 </div>
               </div>

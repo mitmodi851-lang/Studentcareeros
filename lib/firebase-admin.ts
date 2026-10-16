@@ -1,7 +1,9 @@
 import admin from 'firebase-admin';
 
-// Singleton pattern — prevent re-initialization in Next.js hot reload
-let _firestoreAvailable = false;
+declare global {
+  // eslint-disable-next-line no-var
+  var __firestoreAvailable: boolean | undefined;
+}
 
 if (!admin.apps.length) {
   const projectId = process.env.FIREBASE_PROJECT_ID;
@@ -21,7 +23,7 @@ if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert({ projectId, clientEmail, privateKey }),
     });
-    _firestoreAvailable = true;
+    globalThis.__firestoreAvailable = true;
   } else {
     // No real credentials — run in in-memory mode only.
     // Only mark Firestore as available if FIRESTORE_EMULATOR_HOST is explicitly
@@ -38,11 +40,11 @@ if (!admin.apps.length) {
       projectId: projectId || 'student-career-os-dev',
     });
     // Mark as unavailable — we'll use in-memory fallback
-    _firestoreAvailable = false;
+    globalThis.__firestoreAvailable = false;
   }
 }
 
 // Export whether Firestore is actually reachable
-export const firestoreAvailable = _firestoreAvailable;
+export const firestoreAvailable = Boolean(globalThis.__firestoreAvailable);
 export const db = admin.firestore();
 export default admin;

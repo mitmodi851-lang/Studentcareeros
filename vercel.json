@@ -4,6 +4,8 @@
   "devCommand": "next dev",
   "installCommand": "npm install",
   "env": {
-    "NEXTAUTH_URL": "https://student-career-os-pied.vercel.app"
+    "NEXTAUTH_URL": "https://student-career-os-pied.vercel.app",
+    "AUTH_TRUST_HOST": "true",
+    "AUTH_SECRET": "student-career-os-secret-key-32-chars-long"
   }
 }

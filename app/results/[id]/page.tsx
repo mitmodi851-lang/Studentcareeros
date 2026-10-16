@@ -2,13 +2,16 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CertificationCard from '@/components/CertificationCard';
 import type { SubmissionResult, CourseProgress } from '@/types';
 
-export default function ResultsPage({ params }: { params: { id: string } }) {
+export default function ResultsPage({ params: propParams }: { params?: { id: string } }) {
+  const routeParams = useParams();
+  const id = (routeParams?.id as string) || propParams?.id || '';
   const { data: session, status: sessionStatus } = useSession();
   const [result, setResult] = useState<SubmissionResult | null>(null);
   const [loading, setLoading] = useState(true);
@@ -18,13 +21,14 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     // Wait for session to resolve before fetching so we're always authenticated
     if (sessionStatus === 'loading') return;
+    if (!id) return;
 
     async function loadResult() {
       try {
-        const res = await fetch(`/api/submissions/${params.id}`);
+        const res = await fetch(`/api/submissions/${id}`);
         if (!res.ok) {
           if (res.status === 401) throw new Error('Please sign in to view your results.');
-          if (res.status === 404) throw new Error('Result not found. It may have been lost after a server restart.');
+          if (res.status === 404) throw new Error('Result not found.');
           if (res.status === 403) throw new Error('Access denied to this result.');
           throw new Error('Failed to load aptitude result.');
         }
@@ -37,7 +41,7 @@ export default function ResultsPage({ params }: { params: { id: string } }) {
       }
     }
     loadResult();
-  }, [params.id, sessionStatus]);
+  }, [id, sessionStatus]);
 
   // Load course progress for logged-in users
   useEffect(() => {

@@ -5,13 +5,6 @@ import { findUserByEmail, createUser } from '@/lib/db';
 import { firestoreAvailable } from '@/lib/firebase-admin';
 import { z } from 'zod';
 
-// Auto-detect the correct URL for Vercel deployments.
-// VERCEL_URL is set automatically by Vercel (without the https:// prefix).
-// NEXTAUTH_URL takes priority if explicitly configured.
-if (!process.env.NEXTAUTH_URL && process.env.VERCEL_URL) {
-  process.env.NEXTAUTH_URL = `https://${process.env.VERCEL_URL}`;
-}
-
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
@@ -91,7 +84,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET || 'student-career-os-secret-key-32-chars-long',
+  trustHost: true,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'student-career-os-secret-key-32-chars-long',
   pages: {
     signIn: '/auth/signin',
     error: '/auth/signin',

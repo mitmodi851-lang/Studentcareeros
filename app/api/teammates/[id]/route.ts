@@ -20,10 +20,11 @@ const updateRequestSchema = z.object({
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } | Promise<{ id: string }> }
 ) {
   try {
-    const item = await getTeammateRequestById(params.id);
+    const resolvedParams = await Promise.resolve(params);
+    const item = await getTeammateRequestById(resolvedParams.id);
     if (!item) {
       return NextResponse.json({ error: 'Teammate request not found.' }, { status: 404 });
     }
@@ -36,7 +37,7 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } | Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -44,13 +45,14 @@ export async function PUT(
       return NextResponse.json({ error: 'Authentication required.' }, { status: 401 });
     }
 
+    const resolvedParams = await Promise.resolve(params);
     const body = await req.json();
     const parsed = updateRequestSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json({ error: parsed.error.errors[0].message }, { status: 400 });
     }
 
-    const updated = await updateTeammateRequest(params.id, session.user.id, parsed.data);
+    const updated = await updateTeammateRequest(resolvedParams.id, session.user.id, parsed.data);
     return NextResponse.json(updated);
   } catch (err: unknown) {
     console.error('[teammate-put]', err);
@@ -62,7 +64,7 @@ export async function PUT(
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } | Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -70,7 +72,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Authentication required.' }, { status: 401 });
     }
 
-    const success = await deleteTeammateRequest(params.id, session.user.id);
+    const resolvedParams = await Promise.resolve(params);
+    const success = await deleteTeammateRequest(resolvedParams.id, session.user.id);
     if (!success) {
       return NextResponse.json({ error: 'Request not found or unauthorized.' }, { status: 404 });
     }

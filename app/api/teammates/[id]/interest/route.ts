@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } | Promise<{ id: string }> }
 ) {
   try {
     const session = await auth();
@@ -14,7 +14,8 @@ export async function POST(
       return NextResponse.json({ error: 'You must be signed in to express interest.' }, { status: 401 });
     }
 
-    const updated = await toggleTeammateInterest(params.id, session.user.id);
+    const resolvedParams = await Promise.resolve(params);
+    const updated = await toggleTeammateInterest(resolvedParams.id, session.user.id);
     return NextResponse.json(updated);
   } catch (err: unknown) {
     console.error('[teammate-interest-post]', err);
